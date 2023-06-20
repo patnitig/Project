@@ -7,6 +7,10 @@ package ca.sheridancollege.project;
 /**
  *
  * @author dixan
+ *  
+ * @modifier Gagandeep Kaur  
+ * @modifier Jasbir Singh 
+ * @modifier Jobanpreet Singh
  */
 import java.util.ArrayList;
 

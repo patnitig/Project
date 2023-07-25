@@ -20,44 +20,46 @@ package ca.sheridancollege.project;
  * @date June 20, 2023
  *
  */
-public abstract class Card {
-    //default modifier for child classes
+public class Card {
 
-    /**
-     * Students should implement this method for their specific children classes
-     *
-     * @return a String representation of a card. Could be an UNO card, a
-     * regular playing card etc.
-     *
-     */
-    private String rank;
-    private String suit;
+    private final String rank;
+    private final String suit;
 
-    /**
-     * Card object with the given rank and suit.
-     *
-     * The rank of the card (e.g., "Ace", "2", "3", ..., "King") The suit of the
-     * card (e.g., "Spades", "Hearts", "Diamonds","Clubs")
-     */
+    // Define valid suits and ranks for a standard deck of cards
+    public static final String[] SUITS = {"Hearts", "Diamonds", "Clubs", "Spades"};
+    public static final String[] RANKS = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+
     public Card(String rank, String suit) {
         this.rank = rank;
         this.suit = suit;
     }
 
-    //Return the rank of the card 
     public String getRank() {
         return rank;
     }
 
-    //Return the suit of the card
     public String getSuit() {
         return suit;
     }
 
-    //Print Line
+    // Returns the numerical value of the rank for comparison
+    public int getRankValue() {
+        // Assuming the ranks are "2", "3", ..., "10", "Jack", "Queen", "King", "Ace"
+        if (rank.equals("Jack")) {
+            return 11;
+        } else if (rank.equals("Queen")) {
+            return 12;
+        } else if (rank.equals("King")) {
+            return 13;
+        } else if (rank.equals("Ace")) {
+            return 14;
+        } else {
+            return Integer.parseInt(rank);
+        }
+    }
+
     @Override
     public String toString() {
         return rank + " of " + suit;
     }
-
 }

@@ -5,50 +5,58 @@
  */
 package ca.sheridancollege.project;
 
+import java.util.ArrayList;
+
 /**
- * A class that models each Player in the game. Players have an identifier, which should be unique.
+ * A class that models each Player in the game. Players have an identifier,
+ * which should be unique.
  *
  * @author dancye
  * @author Paul Bonenfant Jan 2020
- * 
- * @modifier Dixantkumar Patel 
- * @modifier Gagandeep Kaur  
- * @modifier Jasbir Singh 
+ *
+ * @modifier Dixantkumar Patel
+ * @modifier Gagandeep Kaur
+ * @modifier Jasbir Singh
  * @modifier Jobanpreet Singh
  */
-public abstract class Player {
+public class Player {
 
-    private String name; //the unique name for this player
+    private String name; // The unique name for this player
+    private int score;   // The player's score
+    private ArrayList<Card> playerCards; // The list of cards the player holds
 
-    /**
-     * A constructor that allows you to set the player's unique ID
-     *
-     * @param name the unique ID to assign to this player.
-     */
     public Player(String name) {
         this.name = name;
+        this.score = 0;
+        this.playerCards = new ArrayList<>();
     }
 
-    /**
-     * @return the player name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Ensure that the playerID is unique
-     *
-     * @param name the player name to set
-     */
-    public void setName(String name) {
-        this.name = name;
+    public int getScore() {
+        return score;
     }
 
-    /**
-     * The method to be overridden when you subclass the Player class with your specific type of Player and filled in
-     * with logic to play your game.
-     */
-    public abstract void play();
+    public void addToScore(int points) {
+        score += points;
+    }
 
+    public ArrayList<Card> getPlayerCards() {
+        return playerCards;
+    }
+
+    public void setPlayerCards(ArrayList<Card> playerCards) {
+        this.playerCards = playerCards;
+    }
+
+    // Play the top card from the player's deck
+    public Card playCard() {
+        if (!playerCards.isEmpty()) {
+            return playerCards.remove(0);
+        } else {
+            return null;
+        }
+    }
 }

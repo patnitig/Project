@@ -32,7 +32,10 @@ public class WarGame extends Game {
         }
 
         // 2. Shuffle the deck
-        Collections.shuffle(deck);
+        System.out.println("Shuffling the deck...");
+        GroupOfCards groupOfCards = new GroupOfCards(deck);
+        groupOfCards.shuffle();
+        deck = groupOfCards.getCards();
 
         // 3. Divide the deck between players
         int numPlayers = getPlayers().size();
@@ -44,6 +47,7 @@ public class WarGame extends Game {
                 playerCards.add(deck.remove(0));
             }
             getPlayers().get(i).setPlayerCards(playerCards);
+            System.out.println(getPlayers().get(i).getName() + " received " + playerCards.size() + " cards.");
         }
 
         // 4. Start the game loop
@@ -77,19 +81,31 @@ public class WarGame extends Game {
             // 6. Compare the ranks of the cards
             if (!cardsInPlay.isEmpty()) {
                 int highestRank = cardsInPlay.get(0).getRankValue();
+                int countHighestRank = 0;  // Track the number of cards with highest rank
+
                 for (Card card : cardsInPlay) {
                     int rank = card.getRankValue();
                     if (rank > highestRank) {
                         highestRank = rank;
+                        countHighestRank = 1;
+                    } else if (rank == highestRank) {
+                        countHighestRank++;
                     }
                 }
-                for (Card card : cardsInPlay) {
-                    if (card.getRankValue() == highestRank) {
-                        Player roundWinner = findPlayerByCard(card);
-                        if (roundWinner != null) {
-                            roundWinner.addToScore(1);
+
+                if (countHighestRank == 1) {
+                    // Only one player has the highest rank
+                    for (Card card : cardsInPlay) {
+                        if (card.getRankValue() == highestRank) {
+                            Player roundWinner = findPlayerByCard(card);
+                            if (roundWinner != null) {
+                                roundWinner.addToScore(1);
+                            }
                         }
                     }
+                } else {
+                    // It's a tie
+                    System.out.println("Round tied.");
                 }
             }
 
@@ -130,25 +146,30 @@ public class WarGame extends Game {
         if (!winners.isEmpty()) {
             if (winners.size() == 1) {
                 Player winner = winners.get(0);
-                System.out.println("Game over! Winner: " + winner.getName() + " with a score of " + winner.getScore());
+                System.out.println("Game over! Winner: " + winner.getName());
             } else {
-                System.out.println("Game over! It's a tie!");
-                for (Player winner : winners) {
-                    System.out.println("Winner: " + winner.getName() + " with a score of " + winner.getScore());
-                }
-            }
+                // Determine the player with the highest-ranking final card
+                Player finalWinner = winners.get(0);
+                int highestFinalRank = finalWinner.getPlayerCards().isEmpty() ? -1 : finalWinner.getPlayerCards().get(0).getRankValue();
 
-            // Display final scores for all players
-            System.out.println("Final Scores:");
-            for (Player player : getPlayers()) {
-                System.out.println(player.getName() + "'s score: " + player.getScore());
+                for (Player player : winners) {
+                    if (!player.getPlayerCards().isEmpty()) {
+                        int finalRank = player.getPlayerCards().get(0).getRankValue();
+                        if (finalRank > highestFinalRank) {
+                            highestFinalRank = finalRank;
+                            finalWinner = player;
+                        }
+                    }
+                }
+
+                System.out.println();
+                System.out.println("Game over! Winner: " + finalWinner.getName());
             }
         } else {
             System.out.println("No winners. The game ended without any rounds being played.");
         }
     }
 
-    // Helper method to find the player who played a specific card
     private Player findPlayerByCard(Card card) {
         for (Player player : getPlayers()) {
             if (player.getPlayerCards().contains(card)) {

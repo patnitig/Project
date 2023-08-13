@@ -50,71 +50,105 @@ public class WarGame extends Game {
         int round = 1;
         while (true) {
             System.out.println("Round " + round + ":");
-            round++;
 
             // 5. Each player plays a card
             ArrayList<Card> cardsInPlay = new ArrayList<>();
-            for (Player player : getPlayers()) {
-                ArrayList<Card> playerCards = player.getPlayerCards();
-                if (!playerCards.isEmpty()) {
-                    Card card = playerCards.remove(0);
-                    cardsInPlay.add(card);
-                    System.out.println(player.getName() + " plays: " + card);
-                }
+
+            // Player 1's turn (User input)
+            Player player1 = getPlayers().get(0);
+            ArrayList<Card> player1Cards = player1.getPlayerCards();
+            if (!player1Cards.isEmpty()) {
+                System.out.println(player1.getName() + ", it's your turn. Press Enter to play a card.");
+                new java.util.Scanner(System.in).nextLine(); // Wait for Enter key
+                Card card1 = player1Cards.remove(0);
+                cardsInPlay.add(card1);
+                System.out.println(player1.getName() + " plays: " + card1);
+            }
+
+            // Player 2's turn (AI)
+            Player player2 = getPlayers().get(1);
+            ArrayList<Card> player2Cards = player2.getPlayerCards();
+            if (!player2Cards.isEmpty()) {
+                Card card2 = player2Cards.remove(0);
+                cardsInPlay.add(card2);
+                System.out.println(player2.getName() + " plays: " + card2);
             }
 
             // 6. Compare the ranks of the cards
-            Card highestCard = cardsInPlay.get(0);
-            for (Card card : cardsInPlay) {
-                if (card.getRankValue() > highestCard.getRankValue()) {
-                    highestCard = card;
+            if (!cardsInPlay.isEmpty()) {
+                int highestRank = cardsInPlay.get(0).getRankValue();
+                for (Card card : cardsInPlay) {
+                    int rank = card.getRankValue();
+                    if (rank > highestRank) {
+                        highestRank = rank;
+                    }
+                }
+                for (Card card : cardsInPlay) {
+                    if (card.getRankValue() == highestRank) {
+                        Player roundWinner = findPlayerByCard(card);
+                        if (roundWinner != null) {
+                            roundWinner.addToScore(1);
+                        }
+                    }
                 }
             }
 
-            // 7. Handle the case of a tie ("war")
-            ArrayList<Player> roundWinners = new ArrayList<>();
-            for (Card card : cardsInPlay) {
-                if (card.getRankValue() == highestCard.getRankValue()) {
-                    roundWinners.add(findPlayerByCard(card));
-                }
-            }
-
-            if (roundWinners.size() == 1) {
-                // One winner
-                Player roundWinner = roundWinners.get(0);
-                System.out.println("Round winner: " + roundWinner.getName());
-                roundWinner.addToScore(1);
-            } else {
-                // War
-                System.out.println("It's a tie! War!");
-                for (Player roundWinner : roundWinners) {
-                    roundWinner.addToScore(1);
-                }
-            }
-
-            // 8. Continue steps 5-7 until a player wins
+            // Check for game over conditions
+            boolean gameOver = true;
             for (Player player : getPlayers()) {
-                if (player.getPlayerCards().isEmpty()) {
-                    // Player has no more cards, game over
-                    declareWinner();
-                    return;
+                if (!player.getPlayerCards().isEmpty()) {
+                    gameOver = false;
+                    break;
                 }
             }
+
+            if (gameOver) {
+                declareWinner();
+                return;
+            }
+
+            round++;
         }
     }
 
     @Override
     public void declareWinner() {
-        // Find the player with the highest score
-        Player winner = getPlayers().get(0);
+        ArrayList<Player> winners = new ArrayList<>();
+        int highestScore = -1;
+
         for (Player player : getPlayers()) {
-            if (player.getScore() > winner.getScore()) {
-                winner = player;
+            int score = player.getScore();
+            if (score > highestScore) {
+                winners.clear();
+                winners.add(player);
+                highestScore = score;
+            } else if (score == highestScore) {
+                winners.add(player);
             }
         }
-        System.out.println("Game over! Winner: " + winner.getName() + " with a score of " + winner.getScore());
+
+        if (!winners.isEmpty()) {
+            if (winners.size() == 1) {
+                Player winner = winners.get(0);
+                System.out.println("Game over! Winner: " + winner.getName() + " with a score of " + winner.getScore());
+            } else {
+                System.out.println("Game over! It's a tie!");
+                for (Player winner : winners) {
+                    System.out.println("Winner: " + winner.getName() + " with a score of " + winner.getScore());
+                }
+            }
+
+            // Display final scores for all players
+            System.out.println("Final Scores:");
+            for (Player player : getPlayers()) {
+                System.out.println(player.getName() + "'s score: " + player.getScore());
+            }
+        } else {
+            System.out.println("No winners. The game ended without any rounds being played.");
+        }
     }
 
+    // Helper method to find the player who played a specific card
     private Player findPlayerByCard(Card card) {
         for (Player player : getPlayers()) {
             if (player.getPlayerCards().contains(card)) {

@@ -44,18 +44,28 @@ public class Card {
 
     // Returns the numerical value of the rank for comparison
     public int getRankValue() {
-        // Assuming the ranks are "2", "3", ..., "10", "Jack", "Queen", "King", "Ace"
-        if (rank.equals("Jack")) {
-            return 11;
-        } else if (rank.equals("Queen")) {
-            return 12;
-        } else if (rank.equals("King")) {
-            return 13;
-        } else if (rank.equals("Ace")) {
-            return 14;
-        } else {
-            return Integer.parseInt(rank);
+         int numericValue;
+    try {
+        numericValue = Integer.parseInt(rank);
+    } catch (NumberFormatException e) {
+        switch (rank) {
+            case "Jack":
+                numericValue = 11;
+                break;
+            case "Queen":
+                numericValue = 12;
+                break;
+            case "King":
+                numericValue = 13;
+                break;
+            case "Ace":
+                numericValue = 14;
+                break;
+            default:
+                numericValue = -1; // Handle invalid rank gracefully
         }
+    }
+    return numericValue;
     }
 
     @Override

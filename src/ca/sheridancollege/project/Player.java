@@ -25,7 +25,7 @@ public class Player {
     private int score;   // The player's score
     private ArrayList<Card> playerCards; // The list of cards the player holds
 
-    public Player(String name) {
+   public Player(String name) {
         this.name = name;
         this.score = 0;
         this.playerCards = new ArrayList<>();

@@ -24,11 +24,9 @@ import java.util.Collections;
 public class GroupOfCards {
 
     private ArrayList<Card> cards;
-    private int size;
 
-    public GroupOfCards(int size) {
-        this.size = size;
-        cards = new ArrayList<>();
+    public GroupOfCards(ArrayList<Card> cards) {
+        this.cards = cards;
     }
 
     public ArrayList<Card> getCards() {
@@ -37,13 +35,5 @@ public class GroupOfCards {
 
     public void shuffle() {
         Collections.shuffle(cards);
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
     }
 }

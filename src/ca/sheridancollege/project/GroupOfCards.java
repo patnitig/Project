@@ -16,10 +16,11 @@ import java.util.Collections;
  * @author dancye
  * @author Paul Bonenfant Jan 2020
  *
- * @modifier Dixantkumar Patel
- * @modifier Gagandeep Kaur
- * @modifier Jasbir Singh
- * @modifier Jobanpreet Singh
+ * @modifier Nitignakumari Patel
+ * @modifier Bhoomi Jaswani
+ * @modifier Amandeep Kaur
+ * 
+ * @date November 28, 2024
  */
 public class GroupOfCards {
 

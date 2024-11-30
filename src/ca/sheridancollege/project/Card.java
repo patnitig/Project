@@ -12,12 +12,11 @@ package ca.sheridancollege.project;
  *
  * @author dancye
  *
- * @modifier Dixantkumar Patel
- * @modifier Gagandeep Kaur
- * @modifier Jasbir Singh
- * @modifier Jobanpreet Singh
+ * @modifier Nitignakumari Patel
+ * @modifier Bhoomi Jaswani
+ * @modifier Amandeep Kaur
  *
- * @date June 20, 2023
+ * @date November 28, 2024
  *
  */
 public class Card {

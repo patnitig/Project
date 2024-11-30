@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
- * @author dixan
+ * @author nitig
  */
 public class GroupOfCardsTest {
     

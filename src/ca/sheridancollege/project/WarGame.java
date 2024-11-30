@@ -5,15 +5,18 @@
 package ca.sheridancollege.project;
 
 import java.util.ArrayList;
-import java.util.Collections;
+//import java.util.Collections;
 
 /**
  *
- * @author dixan
+ * @author nitig
  *
- * @modifier Gagandeep Kaur
- * @modifier Jasbir Singh
- * @modifier Jobanpreet Singh
+ * @modifier Nitignakumari Patel
+ * @modifier Bhoomi Jaswani
+ * @modifier Amandeep Kaur
+ * 
+ * 
+ * @date November 28, 2024
  */
 public class WarGame extends Game {
 

@@ -4,87 +4,57 @@
  */
 package ca.sheridancollege.project;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
- * @author dixan
+ * @author nitig
  */
 public class CardTest {
 
-    public CardTest() {
-    }
-
-    @BeforeAll
-    public static void setUpClass() {
-    }
-
-    @AfterAll
-    public static void tearDownClass() {
-    }
-
-    @BeforeEach
-    public void setUp() {
-    }
-
-    @AfterEach
-    public void tearDown() {
-    }
-
-    /**
-     * Test of getRank method, of class Card.
-     */
+    // Good tests - most common code paths
     @Test
     public void testGetRank() {
-        Card card = new Card("7", "Hearts");
-        String result = card.getRank();
-        assertEquals("7", result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        Card card = new Card("Ace", "Hearts");
+        assertEquals("Ace", card.getRank());
     }
 
-    /**
-     * Test of getSuit method, of class Card.
-     */
     @Test
     public void testGetSuit() {
-        Card card = new Card("Queen", "Spades");
-        String result = card.getSuit();
-        assertEquals("Spades", result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        Card card = new Card("King", "Spades");
+        assertEquals("Spades", card.getSuit());
     }
 
-    /**
-     * Test of getRankValue method, of class Card.
-     */
     @Test
-    public void testGetRankValue() {
-        Card card1 = new Card("4", "Diamonds");
-        Card card2 = new Card("Jack", "Clubs");
-        int result1 = card1.getRankValue();
-        int result2 = card2.getRankValue();
-        assertEquals(4, result1);
-        assertEquals(11, result2);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+    public void testGetRankValueNumeric() {
+        Card card = new Card("7", "Diamonds");
+        assertEquals(7, card.getRankValue());
     }
 
-    /**
-     * Test of toString method, of class Card.
-     */
     @Test
     public void testToString() {
-        Card card = new Card("Ace", "Hearts");
-        String result = card.toString();
-        assertEquals("Ace of Hearts", result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        Card card = new Card("10", "Hearts");
+        assertEquals("10 of Hearts", card.toString());
     }
 
+    // Boundary tests - tests at the data boundary
+    @Test
+    public void testGetRankBoundary() {
+        Card card = new Card("2", "Spades");
+        assertEquals(2, card.getRankValue());
+    }
+
+    @Test
+    public void testGetRankBoundaryAce() {
+        Card card = new Card("Ace", "Hearts");
+        assertEquals(14, card.getRankValue());
+    }
+
+    @Test
+    public void testGetRankBoundaryKing() {
+        Card card = new Card("King", "Diamonds");
+        assertEquals(13, card.getRankValue());
+    }
 }

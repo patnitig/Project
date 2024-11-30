@@ -6,7 +6,14 @@ package ca.sheridancollege.project;
 
 /**
  *
- * @author dixan
+ * @author nitig
+ * 
+ * @modifier Nitignakumari Patel
+ * @modifier Bhoomi Jaswani
+ * @modifier Amandeep Kaur
+ * 
+ * 
+ * @date November 28, 2024
  */
 public class Main {
 
